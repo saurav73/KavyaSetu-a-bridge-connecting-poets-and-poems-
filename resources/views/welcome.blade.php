@@ -1,49 +1,57 @@
 @extends('layouts.app')
 
-@section('title', 'Welcome - KavyaSetu')
+@section('title', 'Welcome to Poetry Haven')
 
 @section('content')
-<div class="welcome-container" style="color: white; padding: 60px 20px; text-align: center;">
-    <div class="hero-section" style="margin-bottom: 60px;">
-        <h1 style="font-size: 4rem; font-weight: 800; margin-bottom: 20px; text-shadow: 0 4px 10px rgba(0,0,0,0.3);">
-            📝 KavyaSetu
-        </h1>
-        <p style="font-size: 1.5rem; opacity: 0.9; max-width: 800px; margin: 0 auto 40px; line-height: 1.6;">
-            A bridge connecting poets and poems. Organize your thoughts, manage your verses, and bridge the gap between inspiration and creation.
-        </p>
-        
-        <div style="display: flex; gap: 20px; justify-content: center;">
-            <a href="{{ route('register') }}" class="btn btn-success" style="padding: 15px 40px; font-size: 1.2rem; border-radius: 50px; box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);">
-                Get Started
-            </a>
-            <a href="{{ route('login') }}" class="btn btn-primary" style="padding: 15px 40px; font-size: 1.2rem; border-radius: 50px; box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);">
-                Welcome Back
-            </a>
+
+    <div class="relative bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 py-24 sm:py-32">
+        <div class="max-w-5xl mx-auto px-6 lg:px-8 text-center">
+            <h1 class="text-5xl sm:text-6xl font-serif font-bold text-gray-900 mb-6 leading-tight">
+                Share Your Heart,<br>
+                <span class="text-indigo-700">One Verse at a Time</span>
+            </h1>
+
+            <p class="text-xl text-gray-700 max-w-2xl mx-auto mb-10">
+                A gentle space for poets to publish original work and discover beautiful words from others.
+            </p>
+
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                @guest
+                    <a href="{{ route('register') }}"
+                       class="inline-flex items-center px-8 py-4 text-lg font-medium rounded-full text-white bg-indigo-600 hover:bg-indigo-700 shadow-lg transition transform hover:-translate-y-1">
+                        Start Writing → 
+                    </a>
+                @else
+                    <a href="{{ route('poems.create') }}"
+                       class="inline-flex items-center px-8 py-4 text-lg font-medium rounded-full text-white bg-indigo-600 hover:bg-indigo-700 shadow-lg transition transform hover:-translate-y-1">
+                        Write New Poem →
+                    </a>
+                @endguest
+
+                <a href="{{ route('poems.index') }}"
+                   class="inline-flex items-center px-8 py-4 text-lg font-medium rounded-full border-2 border-indigo-600 text-indigo-700 hover:bg-indigo-50 transition">
+                    Explore Poems
+                </a>
+            </div>
         </div>
     </div>
 
-    <div class="features-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 80px;">
-        <div class="card" style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); color: white; border: 1px solid rgba(255,255,255,0.2);">
-            <div style="font-size: 3rem; margin-bottom: 20px;">✍️</div>
-            <h3 style="font-size: 1.5rem; margin-bottom: 15px;">Capture Inspiration</h3>
-            <p style="opacity: 0.8;">Never let a line of poetry slip away. Quickly jot down your thoughts and ideas as they come.</p>
-        </div>
-        
-        <div class="card" style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); color: white; border: 1px solid rgba(255,255,255,0.2);">
-            <div style="font-size: 3rem; margin-bottom: 20px;">📅</div>
-            <h3 style="font-size: 1.5rem; margin-bottom: 15px;">Organize Work</h3>
-            <p style="opacity: 0.8;">Keep your poems and drafts organized. Manage your poetic journey with easy-to-use task lists.</p>
-        </div>
-        
-        <div class="card" style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); color: white; border: 1px solid rgba(255,255,255,0.2);">
-            <div style="font-size: 3rem; margin-bottom: 20px;">🚀</div>
-            <h3 style="font-size: 1.5rem; margin-bottom: 15px;">Stay Productive</h3>
-            <p style="opacity: 0.8;">Focus on your creativity while we handle the organization. A simple tool for complex minds.</p>
+    <!-- Quick stats or teaser -->
+    <div class="py-16 bg-white">
+        <div class="max-w-5xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
+            <div>
+                <div class="text-4xl font-bold text-indigo-600 mb-2">1,240+</div>
+                <p class="text-gray-600">Poems Shared</p>
+            </div>
+            <div>
+                <div class="text-4xl font-bold text-indigo-600 mb-2">3,800+</div>
+                <p class="text-gray-600">Verses Read Today</p>
+            </div>
+            <div>
+                <div class="text-4xl font-bold text-indigo-600 mb-2">Worldwide</div>
+                <p class="text-gray-600">Poets & Readers</p>
+            </div>
         </div>
     </div>
 
-    <footer style="margin-top: 100px; opacity: 0.7; font-size: 0.9rem;">
-        &copy; {{ date('Y') }} KavyaSetu. All rights reserved.
-    </footer>
-</div>
 @endsection

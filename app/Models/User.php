@@ -9,24 +9,24 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
      *
-     * @var list<string>
+     * @var array<int, string>
      */
     protected $fillable = [
         'name',
         'email',
         'password',
+        'user_id',
     ];
 
     /**
      * The attributes that should be hidden for serialization.
      *
-     * @var list<string>
+     * @var array<int, string>
      */
     protected $hidden = [
         'password',
@@ -45,4 +45,28 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    // ────────────────────────────────────────────────
+    //  Relationships
+    // ────────────────────────────────────────────────
+
+    /**
+     * Get all poems written by this user
+     */
+    public function poems()
+    {
+        return $this->hasMany(Poem::class);
+    }
+
+    // Optional: if you add likes later
+    // public function likes()
+    // {
+    //     return $this->hasMany(Like::class);
+    // }
+
+    // Optional: if you add comments later
+    // public function comments()
+    // {
+    //     return $this->hasMany(Comment::class);
+    // }
 }
