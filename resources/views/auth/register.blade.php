@@ -1,57 +1,83 @@
 @extends('layouts.app')
 
-@section('title', 'Register - Todo List')
+@section('title', 'Join Poetry Haven')
 
 @section('content')
-<div class="auth-container">
-    <div class="auth-header">
-        <h1>Todo List</h1>
-        <p>Create your account to get started</p>
-    </div>
-
-    <div class="card">
-        <h2 style="margin-bottom: 25px; color: #1f2937;">Register</h2>
-
-        @if ($errors->any())
-            <div class="alert alert-error">
-                <ul style="list-style: none; margin: 0; padding: 0;">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
-        <form method="POST" action="{{ route('register') }}">
-            @csrf
-
-            <div class="form-group">
-                <label for="name">Full Name</label>
-                <input type="text" id="name" name="name" value="{{ old('name') }}" required autofocus>
+    <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-md w-full space-y-8 bg-white p-10 rounded-2xl shadow-xl border border-gray-100">
+            <div class="text-center">
+                <h2 class="mt-6 text-3xl font-serif font-bold text-gray-900">
+                    Begin your poetic journey
+                </h2>
+                <p class="mt-2 text-sm text-gray-600">
+                    Create your account and start sharing
+                </p>
             </div>
 
-            <div class="form-group">
-                <label for="email">Email Address</label>
-                <input type="email" id="email" name="email" value="{{ old('email') }}" required>
-            </div>
+            <form method="POST" action="{{ route('register') }}" class="mt-8 space-y-6">
+                @csrf
 
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required>
-            </div>
+                <!-- Name -->
+                <div>
+                    <label for="name" class="block text-sm font-medium text-gray-700">Full name</label>
+                    <div class="mt-1">
+                        <input id="name" name="name" type="text" autocomplete="name" required
+                               class="appearance-none block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                               value="{{ old('name') }}">
+                    </div>
+                    @error('name')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
 
-            <div class="form-group">
-                <label for="password_confirmation">Confirm Password</label>
-                <input type="password" id="password_confirmation" name="password_confirmation" required>
-            </div>
+                <!-- Email -->
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700">Email address</label>
+                    <div class="mt-1">
+                        <input id="email" name="email" type="email" autocomplete="email" required
+                               class="appearance-none block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                               value="{{ old('email') }}">
+                    </div>
+                    @error('email')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
 
-            <button type="submit" class="btn btn-primary" style="width: 100%;">Register</button>
-        </form>
+                <!-- Password -->
+                <div>
+                    <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                    <div class="mt-1">
+                        <input id="password" name="password" type="password" autocomplete="new-password" required
+                               class="appearance-none block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    </div>
+                    @error('password')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
 
-        <div class="auth-links">
-            <p>Already have an account? <a href="{{ route('login') }}">Login here</a></p>
+                <!-- Confirm Password -->
+                <div>
+                    <label for="password_confirmation" class="block text-sm font-medium text-gray-700">Confirm password</label>
+                    <div class="mt-1">
+                        <input id="password_confirmation" name="password_confirmation" type="password" autocomplete="new-password" required
+                               class="appearance-none block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    </div>
+                </div>
+
+                <div>
+                    <button type="submit"
+                            class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition">
+                        Create account
+                    </button>
+                </div>
+
+                <div class="text-center text-sm text-gray-600">
+                    Already have an account?
+                    <a href="{{ route('login') }}" class="font-medium text-indigo-600 hover:text-indigo-500">
+                        Sign in →
+                    </a>
+                </div>
+            </form>
         </div>
     </div>
-</div>
 @endsection
-

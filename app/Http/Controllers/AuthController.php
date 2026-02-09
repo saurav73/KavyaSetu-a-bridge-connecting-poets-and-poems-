@@ -36,7 +36,7 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('tasks.index')->with('success', 'Registration successful! Welcome to your Todo List.');
+        return redirect()->route('poems.index')->with('success', 'Registration successful! Welcome to Poetry Haven.');
     }
 
     /**
@@ -62,7 +62,7 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials, $remember)) {
             $request->session()->regenerate();
-            return redirect()->route('tasks.index')->with('success', 'Welcome back!');
+            return redirect()->route('poems.my')->with('success', 'Welcome back!');
         }
 
         return back()->withErrors([
@@ -79,6 +79,6 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('login')->with('success', 'You have been logged out successfully.');
+        return redirect()->route('poems.index')->with('success', 'You have been logged out successfully.');
     }
 }

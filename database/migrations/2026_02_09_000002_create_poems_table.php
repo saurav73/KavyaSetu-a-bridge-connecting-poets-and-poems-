@@ -11,14 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tasks', function (Blueprint $table) {
+        Schema::create('poems', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users', 'id')->onDelete('cascade');
             $table->string('title');
-            $table->string('description');
-            $table->string('status')->default('pending');
-            $table->string('address')->nullable();
+            $table->longText('body');
+            $table->string('slug')->unique();
+            $table->boolean('is_published')->default(false);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tasks');
+        Schema::dropIfExists('poems');
     }
 };
