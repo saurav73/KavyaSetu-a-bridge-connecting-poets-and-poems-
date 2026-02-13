@@ -44,15 +44,54 @@ class Poem extends Model
     {
         static::creating(function (Poem $poem) {
             if (empty($poem->slug)) {
-                $poem->slug = Str::slug($poem->title) . '-' . substr(uniqid(), -6);
+                $poem->slug = self::generateUniqueSlug($poem->title);
             }
         });
 
         static::updating(function (Poem $poem) {
+            // If the title changed and the slug wasn't manually changed,
+            // regenerate a unique slug based on the new title.
             if ($poem->isDirty('title') && ! $poem->isDirty('slug')) {
-                $poem->slug = Str::slug($poem->title) . '-' . substr(uniqid(), -6);
+                $poem->slug = self::generateUniqueSlug($poem->title, $poem->id);
             }
         });
+    }
+
+    /**
+     * Generate a unique slug for the given title.
+     * If $exceptId is provided, exclude that record when checking uniqueness (useful on updates).
+     */
+    protected static function generateUniqueSlug(string $title, ?int $exceptId = null): string
+    {
+        $base = Str::slug($title);
+        $slug = $base;
+        
+
+        $attempts = 0;
+        while (
+            self::where('slug', $slug)
+                ->when($exceptId, fn($q) => $q->where('id', '!=', $exceptId))
+                ->exists()
+        ) {
+            // Append a short unique suffix and try again
+            $slug = $base . '-' . substr(uniqid(), -6);
+            $attempts++;
+            if ($attempts > 10) {
+                // Fallback to random string if many collisions (very unlikely)
+                $slug = $base . '-' . Str::random(6);
+                break;
+            }
+        }
+
+        return $slug;
+    }
+
+    /**
+     * Use `slug` for route model binding by default.
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
     }
 
     // ────────────────────────────────────────────────

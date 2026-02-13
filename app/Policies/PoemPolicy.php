@@ -29,6 +29,7 @@ class PoemPolicy
     public function create(User $user): bool
     {
         return true;
+
     }
 
     /**
@@ -37,6 +38,7 @@ class PoemPolicy
     public function update(User $user, Poem $poem): bool
     {
         return $user->id === $poem->user_id;
+        
     }
 
     /**
